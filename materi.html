@@ -82,15 +82,28 @@
         </div>
       </div>
 
-      <div class="mt-16 text-center">
-        <h3 class="text-2xl font-bold mb-4">📝 Quiz Seputar HTML, CSS, dan JavaScript</h3>
-        <div id="quiz-box" class="bg-white border rounded-lg p-6 max-w-md mx-auto shadow">
-          <p id="quiz-question" class="mb-4 text-lg font-medium"></p>
-          <div id="quiz-options" class="space-y-2"></div>
+      <div class="mt-16 grid md:grid-cols-3 gap-8 text-center">
+        
+        <div class="bg-white border rounded-lg p-6 shadow">
+          <h3 class="text-xl font-bold mb-4">📝 Quiz HTML</h3>
+          <p id="quiz-question-html" class="mb-4 text-lg font-medium"></p>
+          <div id="quiz-options-html" class="space-y-2"></div>
+          <button onclick="loadQuiz('html')" class="mt-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded hover:opacity-90 transition">Soal Lain</button>
         </div>
-        <button onclick="loadQuiz()" class="mt-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded hover:opacity-90 transition">
-          Soal Lain
-        </button>
+
+        <div class="bg-white border rounded-lg p-6 shadow">
+          <h3 class="text-xl font-bold mb-4">🎨 Quiz CSS</h3>
+          <p id="quiz-question-css" class="mb-4 text-lg font-medium"></p>
+          <div id="quiz-options-css" class="space-y-2"></div>
+          <button onclick="loadQuiz('css')" class="mt-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded hover:opacity-90 transition">Soal Lain</button>
+        </div>
+
+        <div class="bg-white border rounded-lg p-6 shadow">
+          <h3 class="text-xl font-bold mb-4">⚡ Quiz JavaScript</h3>
+          <p id="quiz-question-js" class="mb-4 text-lg font-medium"></p>
+          <div id="quiz-options-js" class="space-y-2"></div>
+          <button onclick="loadQuiz('js')" class="mt-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded hover:opacity-90 transition">Soal Lain</button>
+        </div>
       </div>
     </div>
   </main>
@@ -100,23 +113,49 @@
   </footer>
 
   <script>
-    const quizzes = [
+    const quizzesHTML = [
       { question: "Apa singkatan dari HTML?", options: ["HyperText Markup Language", "Hyper Transfer Markup Language", "HighText Machine Language"], answer: "HyperText Markup Language" },
       { question: "Tag HTML untuk membuat hyperlink adalah?", options: ["<link>", "<a>", "<href>"], answer: "<a>" },
+      { question: "Tag HTML untuk menampilkan gambar adalah?", options: ["<img>", "<image>", "<pic>"], answer: "<img>" },
+      { question: "Elemen HTML untuk membuat daftar terurut adalah?", options: ["<ul>", "<ol>", "<li>"], answer: "<ol>" }
+    ];
+
+    const quizzesCSS = [
       { question: "Properti CSS untuk mengubah warna teks adalah?", options: ["color", "background-color", "text-color"], answer: "color" },
       { question: "Properti CSS untuk membuat teks tebal adalah?", options: ["font-weight", "text-bold", "bold"], answer: "font-weight" },
-      { question: "Metode JavaScript untuk menampilkan teks di console adalah?", options: ["console.write()", "console.log()", "log.console()"], answer: "console.log()" },
-      { question: "Metode JavaScript untuk mengubah konten elemen HTML adalah?", options: ["element.innerHTML", "element.changeHTML", "element.setHTML"], answer: "element.innerHTML" },
-      { question: "Tag HTML untuk menampilkan gambar adalah?", options: ["<img>", "<image>", "<pic>"], answer: "<img>" },
       { question: "Selector CSS untuk memilih semua elemen <p> adalah?", options: ["p", ".p", "#p"], answer: "p" },
-      { question: "Fungsi JavaScript untuk menampilkan alert adalah?", options: ["alert()", "prompt()", "confirm()"], answer: "alert()" },
       { question: "Properti CSS untuk mengatur ukuran font adalah?", options: ["font-size", "text-size", "size-font"], answer: "font-size" }
     ];
 
-    function loadQuiz() {
-      const quiz = quizzes[Math.floor(Math.random() * quizzes.length)];
-      document.getElementById("quiz-question").textContent = quiz.question;
-      const optionsBox = document.getElementById("quiz-options");
+    const quizzesJS = [
+      { question: "Metode JavaScript untuk menampilkan teks di console adalah?", options: ["console.write()", "console.log()", "log.console()"], answer: "console.log()" },
+      { question: "Metode JavaScript untuk mengubah konten elemen HTML adalah?", options: ["element.innerHTML", "element.changeHTML", "element.setHTML"], answer: "element.innerHTML" },
+      { question: "Fungsi JavaScript untuk menampilkan alert adalah?", options: ["alert()", "prompt()", "confirm()"], answer: "alert()" },
+      { question: "Tipe data JavaScript untuk angka adalah?", options: ["string", "number", "boolean"], answer: "number" }
+    ];
+
+    function loadQuiz(category) {
+      let quizData;
+      let questionId;
+      let optionsId;
+
+      if (category === 'html') {
+        quizData = quizzesHTML;
+        questionId = "quiz-question-html";
+        optionsId = "quiz-options-html";
+      } else if (category === 'css') {
+        quizData = quizzesCSS;
+        questionId = "quiz-question-css";
+        optionsId = "quiz-options-css";
+      } else if (category === 'js') {
+        quizData = quizzesJS;
+        questionId = "quiz-question-js";
+        optionsId = "quiz-options-js";
+      }
+
+      const quiz = quizData[Math.floor(Math.random() * quizData.length)];
+      document.getElementById(questionId).textContent = quiz.question;
+      const optionsBox = document.getElementById(optionsId);
       optionsBox.innerHTML = "";
       quiz.options.forEach(opt => {
         const btn = document.createElement("button");
@@ -126,7 +165,10 @@
         optionsBox.appendChild(btn);
       });
     }
-    loadQuiz();
+
+    loadQuiz('html');
+    loadQuiz('css');
+    loadQuiz('js');
   </script>
 </body>
 </html>
